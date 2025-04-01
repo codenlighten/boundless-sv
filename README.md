@@ -54,6 +54,47 @@ maxstackmemoryusageconsensus=100000000
 ./src/bitcoind -daemon
 ```
 
+## Running with Docker
+
+### Using Docker Compose (Recommended)
+```bash
+# Build and start the node
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the node
+docker-compose down
+```
+
+### Using Docker Directly
+```bash
+# Build the image
+docker build -t bsv_fork .
+
+# Run the container
+docker run -d \
+  --name bsv_fork_node \
+  -p 8333:8333 \
+  -p 8332:8332 \
+  -v blockchain_data:/root/.bitcoin \
+  bsv_fork
+```
+
+### Docker Volume Management
+The blockchain data is stored in a Docker volume for persistence. You can manage it using:
+```bash
+# List volumes
+docker volume ls
+
+# Inspect volume
+docker volume inspect blockchain_data
+
+# Remove volume (WARNING: This will delete all blockchain data!)
+docker volume rm blockchain_data
+```
+
 ## Genesis Block Information
 - Time: April 1st, 2025 (1712152800)
 - Message: "The Times 01/Apr/2025 Launching a new blockchain from BSV fork"

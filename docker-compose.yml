@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  node:
+    build: .
+    container_name: bsv_fork_node
+    volumes:
+      - blockchain_data:/root/.bitcoin
+    ports:
+      - "8333:8333"  # P2P port
+      - "8332:8332"  # RPC port
+    restart: unless-stopped
+    environment:
+      - BITCOIN_RPC_USER=user
+      - BITCOIN_RPC_PASSWORD=password
+    command: ["./src/bitcoind", "-printtoconsole"]
+
+volumes:
+  blockchain_data:
+    driver: local
