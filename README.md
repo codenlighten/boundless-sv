@@ -1,49 +1,75 @@
-BSV Fork
-=========
+BSV Fork - A New Bitcoin SV Fork
+================================
 
-What is this project?
--------------------
+## Overview
+This is a fork of Bitcoin SV that launched on April 1st, 2025. It features a new genesis block and network parameters while maintaining the core functionality of BSV.
 
-This is a fork of Bitcoin SV that creates a new blockchain from genesis. It maintains the core functionality of BSV while starting fresh with new genesis parameters and network configuration.
+## Key Features
+- New genesis block dated April 1st, 2025
+- Different network magic bytes to prevent cross-network communication
+- Custom network ports (P2P: 8333, RPC: 8332)
+- Maintains BSV's scaling capabilities
 
-Key Features:
-- Fresh genesis block created on April 1, 2025
-- All protocol upgrades enabled from genesis
-- 4GB block size from start
-- Custom network magic bytes and port (8444)
-- Clean checkpoint history
+## Building from Source
 
-Building and Running
--------------------
+### Prerequisites
+```bash
+sudo apt-get update
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils python3
+```
 
-1. Install dependencies (same as BSV)
-2. Build using:
-   ```
-   ./autogen.sh
-   ./configure
-   make
-   ```
-3. Run the node:
-   ```
-   ./src/bitcoind
-   ```
+### Build Instructions
+```bash
+./autogen.sh
+./configure
+make
+```
 
-License
--------
+## Running a Node
 
-This project is released under the terms of the Open BSV license. See [LICENSE](LICENSE) for more information.
+### Configuration
+Create a bitcoin.conf file in your data directory:
+```ini
+# Network Settings
+port=8333
+rpcport=8332
 
-Development Process
--------------------
+# RPC Settings
+rpcuser=your_username
+rpcpassword=your_secure_password
+rpcallowip=127.0.0.1
 
-This is an experimental fork of Bitcoin SV. Please use with caution.
+# Node Settings
+maxconnections=40
+dbcache=4096
+maxmempool=2000
 
-Network Parameters
-----------------
+# Consensus Settings
+excessiveblocksize=4000000000
+maxstackmemoryusageconsensus=100000000
+```
 
-- Network Port: 8444
-- RPC Port: 8445
-- Genesis Time: April 1, 2025
-- All upgrades active from genesis
-- Max Block Size: 4GB
-# boundless-sv
+### Starting the Node
+```bash
+./src/bitcoind -daemon
+```
+
+## Genesis Block Information
+- Time: April 1st, 2025 (1712152800)
+- Message: "The Times 01/Apr/2025 Launching a new blockchain from BSV fork"
+- Initial Difficulty: 0x1d00ffff
+
+## Network Information
+- P2P Port: 8333
+- RPC Port: 8332
+- Network Magic: 0xf9beb4d9
+
+## Seed Nodes
+- seed1.yourfork.org
+- seed2.yourfork.org
+
+## Contributing
+We welcome contributions! Please submit pull requests to our GitHub repository.
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
