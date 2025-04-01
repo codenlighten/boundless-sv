@@ -35,10 +35,10 @@ WORKDIR /bsv_fork
 # Copy source code
 COPY . .
 
-# Build the project
+# Build the project with less parallelism and more verbose output
 RUN ./autogen.sh && \
-    ./configure && \
-    make -j$(nproc)
+    ./configure --enable-debug && \
+    make -j2 V=1
 
 # Create data directory
 RUN mkdir -p /root/.bitcoin
