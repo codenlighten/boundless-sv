@@ -21,10 +21,8 @@ RUN apt-get update && apt-get install -y \
     libboost-program-options-dev \
     libboost-test-dev \
     libboost-thread-dev \
-    libdb++-dev \
     libminiupnpc-dev \
     libzmq3-dev \
-    libqrencode-dev \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
@@ -35,10 +33,18 @@ WORKDIR /bsv_fork
 # Copy source code
 COPY . .
 
-# Build the project with less parallelism and more verbose output
+# Create swap space for build
+RUN dd if=/dev/zero of=/swapfile bs=1G count=4 && \
+    chmod 600 /swapfile && \
+    mkswap /swapfile && \
+    swapon /swapfile
+
+# Build the project with optimized settings
 RUN ./autogen.sh && \
-    ./configure --enable-debug && \
-    make -j2 V=1
+    ./configure --disable-wallet --disable-tests --disable-bench --without-gui && \
+    make -j1 && \
+    swapoff /swapfile && \
+    rm /swapfile
 
 # Create data directory
 RUN mkdir -p /root/.bitcoin
