@@ -33,18 +33,10 @@ WORKDIR /bsv_fork
 # Copy source code
 COPY . .
 
-# Create swap space for build
-RUN dd if=/dev/zero of=/swapfile bs=1G count=4 && \
-    chmod 600 /swapfile && \
-    mkswap /swapfile && \
-    swapon /swapfile
-
 # Build the project with optimized settings
 RUN ./autogen.sh && \
     ./configure --disable-wallet --disable-tests --disable-bench --without-gui && \
-    make -j1 && \
-    swapoff /swapfile && \
-    rm /swapfile
+    make -j1
 
 # Create data directory
 RUN mkdir -p /root/.bitcoin

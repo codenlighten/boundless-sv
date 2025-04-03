@@ -10,9 +10,15 @@ services:
       - "8333:8333"  # P2P port
       - "8332:8332"  # RPC port
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+        reservations:
+          memory: 2G
     environment:
-      - BITCOIN_RPC_USER=user
-      - BITCOIN_RPC_PASSWORD=password
+      - BITCOIN_RPC_USER=bsvuser
+      - BITCOIN_RPC_PASSWORD=bsvpassword
     command: ["./src/bitcoind", "-printtoconsole"]
 
 volumes:
